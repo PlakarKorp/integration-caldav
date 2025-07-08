@@ -1,0 +1,6 @@
+github.com/PlakarKorp/kloset v1.0.1-beta.2 h1:Jc5CNh1ypT+C9nWnXOQWUAgFVW+ONP/YhPW424EKy0U=
+github.com/PlakarKorp/kloset v1.0.1-beta.2/go.mod h1:OZxzmmicf2543Y4znwG05uQmjPouVOekhfAZOtY9Gyk=
+github.com/studio-b12/gowebdav v0.10.0 h1:Yewz8FFiadcGEu4hxS/AAJQlHelndqln1bns3hcJIYc=
+github.com/studio-b12/gowebdav v0.10.0/go.mod h1:bHA7t77X/QFExdeAnDzK6vKM34kEZAcE1OX4MfiwjkE=
+golang.org/x/oauth2 v0.30.0 h1:dnDm7JmhM45NNpd8FDDeLhK6FwqbOf4MLCM9zb1BOHI=
+golang.org/x/oauth2 v0.30.0/go.mod h1:B++QgG3ZKulg6sRPGD/mqlHQs5rB3Ml9erfeDY7xKlU=
