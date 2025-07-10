@@ -16,7 +16,7 @@ import (
 	"golang.org/x/oauth2"
 )
 
-type CaldavImporter struct { //TODO: add more fields as needed
+type CaldavImporter struct {
 	ctx  context.Context
 	opts *importer.Options
 
@@ -26,18 +26,24 @@ type CaldavImporter struct { //TODO: add more fields as needed
 
 func NewCaldavImporter(appCtx context.Context, opts *importer.Options, name string, config map[string]string) (importer.Importer, error) {
 
-	//TODO: Parse configuration options from `config` map
-	url := "https://apidata.googleusercontent.com/caldav/v2/EMAIL@gmail.com/events/"
-	username := ""
-	password := ""
-	isOAuthClient := true
+	// Example google calendar CalDAV URL:
+	//url := "https://apidata.googleusercontent.com/caldav/v2/EMAIL@gmail.com/events/"
+
+	location, found := config["location"]
+	if !found {
+		return nil, fmt.Errorf("missing 'location' in configuration")
+	}
+	url := strings.TrimPrefix(location, "caldav://")
+	username := config["username"]
+	password := config["password"]
+	isOAuthClient := false //TODO: Determine if the client is OAuth2 based on config or opts
 
 	var client *gowebdav.Client
 	if !isOAuthClient {
 		client = gowebdav.NewClient(url, username, password)
 	} else { // OAuth2 client setup //TODO: make the service used (e.g., Google Calendar) configurable
 		googleCal := oauth2utils.OAuthProvider{
-			Name: "google",
+			Name: "name",
 			Config: &oauth2.Config{
 				ClientID:     "ID",     // client ID (provided by the plakar app (production) or by the user directly in a personal app)
 				ClientSecret: "SECRET", // client secret (same as above)

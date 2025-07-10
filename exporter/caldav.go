@@ -7,6 +7,7 @@ import (
 	"io"
 	"io/ioutil"
 	"path"
+	"strings"
 
 	"github.com/PlakarKorp/integration-caldav/oauth2utils"
 	"github.com/PlakarKorp/kloset/objects"
@@ -14,7 +15,7 @@ import (
 	"github.com/studio-b12/gowebdav"
 )
 
-type CaldavExporter struct { //TODO: add more fields as needed
+type CaldavExporter struct {
 	ctx  context.Context
 	opts *exporter.Options
 
@@ -24,18 +25,24 @@ type CaldavExporter struct { //TODO: add more fields as needed
 
 func NewCaldavExporter(appCtx context.Context, opts *exporter.Options, name string, config map[string]string) (exporter.Exporter, error) {
 
-	//TODO: Parse configuration options from `config` map
-	url := "https://apidata.googleusercontent.com/caldav/v2/EMAIL@gmail.com/events/"
-	username := ""
-	password := ""
-	isOAuthClient := true
+	// Example google calendar CalDAV URL:
+	//url := "https://apidata.googleusercontent.com/caldav/v2/EMAIL@gmail.com/events/"
+
+	location, found := config["location"]
+	if !found {
+		return nil, fmt.Errorf("missing 'location' in configuration")
+	}
+	url := strings.TrimPrefix(location, "caldav://")
+	username := config["username"]
+	password := config["password"]
+	isOAuthClient := false //TODO: Determine if the client is OAuth2 based on config or opts
 
 	var client *gowebdav.Client
 	if !isOAuthClient {
 		client = gowebdav.NewClient(url, username, password)
 	} else { // OAuth2 client setup //TODO: make the service used (e.g., Google Calendar) configurable
 		googleCal := oauth2utils.OAuthProvider{
-			Name: "google",
+			Name: "name",
 			Config: &oauth2.Config{
 				ClientID:     "ID",     // client ID (provided by the plakar app (production) or by the user directly in a personal app)
 				ClientSecret: "SECRET", // client secret (same as above)
@@ -72,7 +79,7 @@ func (c *CaldavExporter) StoreFile(pathname string, fp io.Reader, size int64) er
 		return fmt.Errorf("failed to read file %s: %w", pathname, err)
 	}
 
-	//TODO: look at it returns an error, even if the file is written successfully
+	//TODO: look at this, it returns an error, even if the file is written successfully
 	if c.client.Write(pathname, data, 0644) != nil {
 		return fmt.Errorf("error writing %s: %w", pathname, err)
 	}
