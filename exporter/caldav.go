@@ -74,6 +74,10 @@ func (c *CaldavExporter) CreateDirectory(pathname string) error {
 func (c *CaldavExporter) StoreFile(pathname string, fp io.Reader, size int64) error {
 	pathname = path.Base(pathname)
 
+	if path.Ext(pathname) != ".ics" {
+		return fmt.Errorf("unsupported file type %s, only .ics files are supported", pathname)
+	}
+
 	data, err := ioutil.ReadAll(fp)
 	if err != nil {
 		return fmt.Errorf("failed to read file %s: %w", pathname, err)
