@@ -1,9 +1,12 @@
+GO=go
+EXT=
+
 all: importer exporter
 
 importer:
-	go build -o importer-caldav ./importer/caldav.go ./importer/main.go
+	${GO} build -o importer-caldav${EXT} ./importer/caldav.go ./importer/main.go
 
 exporter:
-	go build -o exporter-caldav ./exporter/caldav.go ./exporter/main.go
+	${GO} build -o exporter-caldav${EXT} ./exporter/caldav.go ./exporter/main.go
 
 .PHONY: all importer exporter
