@@ -3,14 +3,14 @@ module github.com/PlakarKorp/integration-caldav
 go 1.24.0
 
 require (
-	github.com/PlakarKorp/go-kloset-sdk v1.0.4
-	github.com/PlakarKorp/kloset v1.0.11
+	github.com/PlakarKorp/go-kloset-sdk v1.0.5
+	github.com/PlakarKorp/kloset v1.0.12
 	github.com/studio-b12/gowebdav v0.10.0
 	golang.org/x/oauth2 v0.32.0
 )
 
 require (
-	github.com/PlakarKorp/integration-grpc v1.0.17 // indirect
+	github.com/PlakarKorp/integration-grpc v1.0.18 // indirect
 	github.com/cockroachdb/crlib v0.0.0-20251122031428-fe658a2dbda1 // indirect
 	github.com/dustin/go-humanize v1.0.1 // indirect
 	github.com/getsentry/sentry-go v0.40.0 // indirect
